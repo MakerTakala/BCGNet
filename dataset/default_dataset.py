@@ -4,7 +4,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 import scipy.io as sio
-from scipy.stats import median_absolute_deviation
+from scipy.stats import median_abs_deviation
 from utils import temp_seed
 from dataset import interpolate_raw_dataset, compute_rms, compute_psd, examine_mode
 
@@ -405,7 +405,7 @@ class Dataset:
 
         # Compute the ratio of each epoch's absolute value across all channels over its MAD
         vec_mabs_eeg = np.mean(abs_epoched_data[:, ch_eeg, :], axis=(1, 2))
-        vec_eeg_norm = (vec_mabs_eeg - np.median(vec_mabs_eeg)) / median_absolute_deviation(vec_mabs_eeg)
+        vec_eeg_norm = (vec_mabs_eeg - np.median(vec_mabs_eeg)) / median_abs_deviation(vec_mabs_eeg)
 
         # If the ratio is higher than the threshold then the epoch is rejected
         vec_idx_bad_epochs = np.arange(0, len(vec_eeg_norm), 1)[vec_eeg_norm > mad_threshold]
